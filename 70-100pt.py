@@ -13,11 +13,56 @@ from Tkinter import *
 root = Tk()
 
 drawpad = Canvas(root, width=800,height=600, background='white')
-player = drawpad.create_oval(390,580,410,600, fill="red")
+player = drawpad.create_oval(390,580,410,600, fill="blue")
 
 # Create your "enemies" here, before the class
+enemy = drawpad.create_rectangle(50, 75, 100, 100, fill='red')
+direction = 5
+
+enemy1 = drawpad.create_rectangle(150, 175, 90, 200, fill='cyan')
+direction = 4
+
+enemy2 = drawpad.create_rectangle(200, 215, 210, 300, fill='light green')
+direction = 3
 
 
+def animate():
+    global direction
+    x1, y1, x2, y2 = drawpad.coords(enemy)
+    if x2 > drawpad.winfo_width():
+        drawpad.move(enemy, -750, 0)
+    elif x1 < 0:
+        direction = 5
+    drawpad.move(enemy, direction, 0)
+    drawpad.after(1, animate)
+    
+    
+    
+def animate1():
+    global direction
+    x1, y1, x2, y2 = drawpad.coords(enemy1)
+    if x2 > drawpad.winfo_width():
+        drawpad.move(enemy1, -900, 0)
+    elif x1 < 0:
+        direction = 4
+    drawpad.move(enemy1, direction, 0)
+    drawpad.after(1, animate1)
+    
+    
+
+def animate2():
+    global direction
+    x1, y1, x2, y2 = drawpad.coords(enemy2)
+    if x2 > drawpad.winfo_width():
+        drawpad.move(enemy2, -600, 0)
+    elif x1 < 0:
+        direction = 3
+    drawpad.move(enemy2, direction, 0)
+    drawpad.after(1, animate2)
+        
+        
+        
+    
 class MyApp:
 	def __init__(self, parent):
        	    global drawpad
@@ -31,19 +76,19 @@ class MyApp:
        	    self.up.bind("<Button-1>", self.upClicked)
        	    
        	    self.down = Button(self.myContainer1)
-       	    self.down.configure(text="down", background= "green")
+       	    self.down.configure(text="down", background= "yellow")
        	    self.down.grid(row=0,column=1)
        	    # Bind an event to the first button
        	    self.down.bind("<Button-1>", self.downClicked)
        	    
        	    self.left = Button(self.myContainer1)
-       	    self.left.configure(text="left", background= "green")
+       	    self.left.configure(text="left", background= "red")
        	    self.left.grid(row=0,column=2)
        	    # Bind an event to the first button
        	    self.left.bind("<Button-1>", self.leftClicked)
        	    
        	    self.right = Button(self.myContainer1)
-       	    self.right.configure(text="right", background= "green")
+       	    self.right.configure(text="right", background= "blue")
        	    self.right.grid(row=0,column=3)
        	    # Bind an event to the first button
        	    self.right.bind("<Button-1>", self.rightClicked)
@@ -86,4 +131,7 @@ class MyApp:
 		
 
 app = MyApp(root)
+animate()
+animate1()
+animate2()
 root.mainloop()
